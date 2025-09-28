@@ -1,19 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
+import MealSearchInput from "./components/MealSearchInput/MealSearchInput";
 
 // fetch all meals
-export const fetchMeals = async () => {
-    try{
-        const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=`);
-        const data = await res.json();
-        return data?.meals || [];
-    }catch(e){
-        console.error(e);
-        return [];
-    }
-}
 
-const Meals = async() => {
+const Meals = async({ searchParams }) => {
+    const { search } = await searchParams;
+    // console.log(search)
+
+    // fetch all meals
+    const fetchMeals = async () => {
+        try{
+            const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`);
+            const data = await res.json();
+            return data?.meals;
+        }catch(err){
+            console.error(err);
+            return [];
+        }
+    }
+
     // meals
     const meals = await fetchMeals();
     // console.log(meals);
@@ -22,6 +28,9 @@ const Meals = async() => {
         <div className={`meals`}>
             <div className={`container mx-auto w-full px-6 lg:px-8 py-8`}>
                 <h1 className={`text-center text-slate-700 text-2xl font-medium`}>Meals</h1>
+
+                {/* input field to search meal by name */}
+                <MealSearchInput />
 
                 <div className={`mt-8 grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4`}>
                     {
