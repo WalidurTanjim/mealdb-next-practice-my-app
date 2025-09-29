@@ -28,6 +28,7 @@ const signupUser = async(payload) => {
         }
 
         const result = await testUserCollection.insertOne(payload);
+        result.insertedId = result?.insertedId.toString();
         return result;
     }catch(err){
         console.error(err);

@@ -26,6 +26,7 @@ const SignUpForm = () => {
         // console.log(payload);
         try{
             const res = await signupUser(payload);
+            // console.log(res);
             
             if(res?.insertedId){
                 form.reset();
