@@ -1,5 +1,5 @@
 "use client";
-import { signIn } from "next-auth/react"
+// import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
 
 const SignInForm = () => {
@@ -11,20 +11,21 @@ const SignInForm = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        // const payload = { email, password };
+        const payload = { email, password };
+        // console.log("Signin form payload:", payload);
 
-        try{
-            const res = await signIn("credentials", { email, password, callbackUrl: '/', redirect: false });
+        // try{
+        //     const res = await signIn("credentials", { email, password, callbackUrl: '/', redirect: false });
             
-            if(res?.ok){
-                router.push('/');
-                form.reset();
-            }else{
-                alert("Authentication failed.");
-            }
-        }catch(err){
-            console.error(err);
-        }
+        //     if(res?.ok){
+        //         router.push('/');
+        //         form.reset();
+        //     }else{
+        //         alert("Authentication failed.");
+        //     }
+        // }catch(err){
+        //     console.error(err);
+        // }
     }
 
     return (
