@@ -28,7 +28,16 @@ const SignUpForm = () => {
 
         try{
             const res = await signupUser(payload);
-            console.log("Signup response:", res);
+            // console.log("Signup response:", res);
+
+            if(res?.insertedId){
+                form.reset();
+                alert('Account created successfully')
+            }
+
+            if(res?.success == false){
+                alert(res?.message);
+            }
         }catch(err){
             console.error(err);
         }
