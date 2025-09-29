@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react"
 
 const SignInForm = () => {
     const handleSubmit = async(e) => {
@@ -7,8 +8,10 @@ const SignInForm = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        const payload = { email, password };
-        console.log(payload);
+        // const payload = { email, password };
+
+        await signIn("credentials", { email, password });
+        // console.log(payload);
     }
 
     return (
@@ -23,7 +26,7 @@ const SignInForm = () => {
                 <input type="text" name="password" id="password" autoComplete="off" required placeholder="Create password" className="w-full border border-gray-300 focus:ring-3 ring-gray-100 outline-none rounded px-4 py-1 text-gray-700" />
             </div>
 
-            <button type="submit" className="w-full border border-gray-300 focus:ring-3 ring-gray-100 outline-none rounded hover:bg-gray-100 active:bg-transparent font-medium px-4 py-1 mt-3 text-gray-700 text-center">Sign up</button>
+            <button type="submit" className="w-full border border-gray-300 focus:ring-3 ring-gray-100 outline-none rounded hover:bg-gray-100 active:bg-transparent font-medium px-4 py-1 mt-3 text-gray-700 text-center">Sign in</button>
         </form>
     );
 };
