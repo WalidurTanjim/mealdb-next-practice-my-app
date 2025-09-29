@@ -34,9 +34,35 @@
 
 "use server";
 
+import dbConnect, { collectionsNames } from "@/lib/dbConnect";
+import bcrypt from "bcrypt";
+
 const signinUser = async(payload) => {
     const { email, password } = payload;
     // console.log("Payload from signin action:", email, password, payload);
+
+    if(!email || !password){
+        return { success: false, message: "All fields are required." }
+    }
+
+    try{
+        const testUserCollection = await dbConnect(collectionsNames.TEST_USER);
+        const user = await testUserCollection.findOne({ email });
+
+        if(!user){
+            return { success: false, message: "Invalid email address" }
+        }
+
+        const isPasswordOk = await bcrypt.compare(password, user?.password);
+        if(!isPasswordOk){
+            return { success: false, message: "Wrong password" }
+        }
+
+        return user;
+    }catch(err){
+        console.error(err);
+        return { success: false, message: "Authentication failed" }
+    }
 };
 
 export default signinUser;
