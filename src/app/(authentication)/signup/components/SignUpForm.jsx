@@ -1,5 +1,6 @@
 "use client";
 
+import signupUser from "@/app/actions/auth/signupUser";
 import { useState } from "react";
 
 const SignUpForm = () => {
@@ -15,8 +16,29 @@ const SignUpForm = () => {
         const confirm_password = form.confirm_password.value;
         const role = "user";
         const badge = "bronze";
+
+        if(confirm_password !== password) {
+            alert("both password not same");
+            return
+        }
+
         const payload = { username, email, password, confirm_password, role, badge };
-        console.log(payload);
+        // console.log(payload);
+        try{
+            const res = await signupUser(payload);
+            
+            if(res?.insertedId){
+                form.reset();
+                alert("User added successfully")
+            }
+
+            if(res?.success == false){
+                alert(res?.message);
+            }
+        }catch(err){
+            console.error(err);
+            return;
+        }
     }
 
     return (
