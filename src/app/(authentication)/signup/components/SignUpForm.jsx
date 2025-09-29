@@ -1,5 +1,6 @@
 "use client";
 
+import signupUser from "@/app/actions/auth/signupUser";
 // import signupUser from "@/app/actions/auth/signupUser";
 import { useState } from "react";
 
@@ -24,6 +25,13 @@ const SignUpForm = () => {
 
         const payload = { username, email, password, confirm_password, role, badge };
         // console.log("Signup form payload:", payload);
+
+        try{
+            const res = await signupUser(payload);
+            console.log("Signup response:", res);
+        }catch(err){
+            console.error(err);
+        }
 
         // try{
         //     const res = await signupUser(payload);

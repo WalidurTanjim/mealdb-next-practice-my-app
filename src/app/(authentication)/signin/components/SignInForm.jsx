@@ -1,4 +1,5 @@
 "use client";
+import signinUser from "@/app/actions/auth/signinUser";
 // import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
 
@@ -13,6 +14,13 @@ const SignInForm = () => {
         const password = form.password.value;
         const payload = { email, password };
         // console.log("Signin form payload:", payload);
+
+        try{
+            const res = await signinUser(payload);
+            console.log("Signin response:", res);
+        }catch(err){
+            console.error(err);
+        }
 
         // try{
         //     const res = await signIn("credentials", { email, password, callbackUrl: '/', redirect: false });

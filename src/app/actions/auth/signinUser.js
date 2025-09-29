@@ -31,3 +31,12 @@
 // };
 
 // export default signinUser;
+
+"use server";
+
+const signinUser = async(payload) => {
+    const { email, password } = payload;
+    // console.log("Payload from signin action:", email, password, payload);
+};
+
+export default signinUser;
