@@ -1,5 +1,6 @@
 "use client";
 
+import SocialSignIn from "@/app/(components)/SocialSignIn/SocialSignIn";
 // import { signIn } from "next-auth/react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
@@ -60,6 +61,8 @@ const SignInForm = () => {
             </div>
 
             <button type="submit" className="w-full border border-gray-300 focus:ring-3 ring-gray-100 outline-none rounded hover:bg-gray-100 active:bg-transparent font-medium px-4 py-1 mt-3 text-gray-700 text-center">Sign in</button>
+
+            <SocialSignIn />
         </form>
     );
 };
