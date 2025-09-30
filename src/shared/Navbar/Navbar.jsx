@@ -1,9 +1,13 @@
+"use client";
+
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useSession } from 'next-auth/react';
 import Link from "next/link";
+import { signOut } from "next-auth/react"
 
 const navigation = [
-    { name: 'Home', href: '/', current: true },
+    { name: 'Home', href: '/', current: false },
     { name: 'Meals', href: '/meals', current: false },
     { name: 'Blogs', href: '/blogs', current: false },
     { name: 'Contact', href: '/contact', current: false },
@@ -14,7 +18,10 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
-    let user = false;
+    const session = useSession();
+    const { data: sessionData, status: sessionStatus } = session;
+    // console.log("Session from navbar:", session);
+    
 
     return (
         <Disclosure as="nav" className="relative bg-gray-800">
@@ -57,7 +64,7 @@ const Navbar = () => {
                     </div>
 
                     {
-                        user ?
+                        sessionStatus === 'authenticated' ?
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 <button
                                     type="button"
@@ -85,28 +92,13 @@ const Navbar = () => {
                                         className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                                     >
                                         <MenuItem>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-                                            >
-                                                Your profile
-                                            </a>
+                                            <Link href="/" className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">Your profile</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-                                            >
-                                                Settings
-                                            </a>
+                                            <Link href="/" className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">Settings</Link>
                                         </MenuItem>
                                         <MenuItem>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-                                            >
-                                                Sign out
-                                            </a>
+                                            <p className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden hover:cursor-pointer" onClick={() => signOut({ redirect: false, callbackUrl: '/' })}>Sign out</p>
                                         </MenuItem>
                                     </MenuItems>
                                 </Menu>
